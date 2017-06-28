@@ -1,0 +1,66 @@
+!!! 5
+%html{lang: "ru"}
+  %head
+    %meta{charset: "utf-8"}
+    %title JS Practice 2
+    %link{rel: "stylesheet", href: "styles/css/style.css"}
+    %script{src: "js/lib/jquery-3.2.1.js"}
+    %script{src: "js/lib/handlebars-v4.0.10.js"}
+    %script{src: "js/script.js"}
+  %body
+    .container.js-container
+
+%script#input-template{type: "text/x-handlebars-template"}
+  .add-array-form#js-add-array-form
+    %textarea.add-array-form__textarea.js-insert-array{placeholder: "Вставьте массив изображений"} {{#if slides.length}}{{json slides}}{{/if}}
+    %button.add-array-form__button.js-add-array Загрузить
+
+%script#slides-template{type: "text/x-handlebars-template"}
+  {{#each slides}}
+  .add-comment-item.js-add-comment-item
+    .add-comment-item__left-block
+      %img.object-image{src: "{{image}}"}
+    .add-comment-item__right-block
+      %label Комментарий
+      %input.add-comment.js-add-comment{data: {id: "{{id}}"}, value: "{{comment}}"}
+      %label Ссылка
+      %input.add-comment.js-add-link{data: {id: "{{id}}"}, value: "{{link}}"}
+      %button.remove-slide.js-remove-slide{data: {id: "{{id}}"}} Удалить
+  {{/each}}
+  %button.btn-back.js-back-step-one Назад
+  %button.btn-save-slides.js-save-slides Сохранить
+
+%script#slider-template{type: "text/x-handlebars-template"}
+  .slider
+    .slider-wrapper
+      .slider-list.js-slider-list
+        {{#each slides}}
+        {{#if link.length}}
+        %a{data: {id: "{{@index}}"}, href: "{{link}}", target: "_blank", class: "slider-item js-slider-item {{#if @first}}active{{/if}}"}
+          %img.slider-item-pic{src: "{{image}}"}
+          {{#if comment.length}}
+          .slider-item-comment {{comment}}
+          {{/if}}
+        {{else}}
+        %div{data: {id: "{{@index}}"}, class: "slider-item js-slider-item {{#if @first}}active{{/if}}"}
+          %img.slider-item-pic{src: "{{image}}"}
+          {{#if comment.length}}
+          .slider-item-comment {{comment}}
+          {{/if}}
+        {{/if}}
+        {{/each}}
+        {{#with slides.[0]}}
+        %div{data: {id: "0"}, class: "slider-item js-slider-item"}
+          %img.slider-item-pic{src: "{{image}}"}
+          {{#if comment.length}}
+          .slider-item-comment {{comment}}
+          {{/if}}
+        {{/with}}
+    .slider-controls
+      .slider-controls-button.slider-controls-button-prev.js-btn-prev{data: {dir: "left"}} &#9668;
+      .slider-controls-button.slider-controls-button-next.js-btn-next{data: {dir: "right"}} &#9658;
+    .slider-navigation
+      {{#each slides}}
+      %div{class: "slider-navigation-bullet js-bullet {{#if @first}}active{{/if}}", data: {id: "{{@index}}"}}
+      {{/each}}
+  %button.btn-back.js-back-step-two Назад

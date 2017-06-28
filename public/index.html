@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+<meta charset='utf-8'>
+<title>JS Practice 2</title>
+<link href='styles/css/style.css' rel='stylesheet'>
+<script src='js/lib/jquery-3.2.1.js'></script>
+<script src='js/lib/handlebars-v4.0.10.js'></script>
+<script src='js/script.js'></script>
+</head>
+<body>
+<div class='container js-container'></div>
+</body>
+</html>
+<script id='input-template' type='text/x-handlebars-template'>
+<div class='add-array-form' id='js-add-array-form'>
+<textarea class='add-array-form__textarea js-insert-array' placeholder='Вставьте массив изображений'>{{#if slides.length}}{{json slides}}{{/if}}</textarea>
+<button class='add-array-form__button js-add-array'>Загрузить</button>
+</div>
+</script>
+<script id='slides-template' type='text/x-handlebars-template'>
+{{#each slides}}
+<div class='add-comment-item js-add-comment-item'>
+<div class='add-comment-item__left-block'>
+<img class='object-image' src='{{image}}'>
+</div>
+<div class='add-comment-item__right-block'>
+<label>Комментарий</label>
+<input class='add-comment js-add-comment' data-id='{{id}}' value='{{comment}}'>
+<label>Ссылка</label>
+<input class='add-comment js-add-link' data-id='{{id}}' value='{{link}}'>
+<button class='remove-slide js-remove-slide' data-id='{{id}}'>Удалить</button>
+</div>
+</div>
+{{/each}}
+<button class='btn-back js-back-step-one'>Назад</button>
+<button class='btn-save-slides js-save-slides'>Сохранить</button>
+</script>
+<script id='slider-template' type='text/x-handlebars-template'>
+<div class='slider'>
+<div class='slider-wrapper'>
+<div class='slider-list js-slider-list'>
+{{#each slides}}
+{{#if link.length}}
+<a class='slider-item js-slider-item {{#if @first}}active{{/if}}' data-id='{{@index}}' href='{{link}}' target='_blank'>
+<img class='slider-item-pic' src='{{image}}'>
+{{#if comment.length}}
+<div class='slider-item-comment'>{{comment}}</div>
+{{/if}}
+</a>
+{{else}}
+<div class='slider-item js-slider-item {{#if @first}}active{{/if}}' data-id='{{@index}}'>
+<img class='slider-item-pic' src='{{image}}'>
+{{#if comment.length}}
+<div class='slider-item-comment'>{{comment}}</div>
+{{/if}}
+</div>
+{{/if}}
+{{/each}}
+{{#with slides.[0]}}
+<div class='slider-item js-slider-item' data-id='0'>
+<img class='slider-item-pic' src='{{image}}'>
+{{#if comment.length}}
+<div class='slider-item-comment'>{{comment}}</div>
+{{/if}}
+</div>
+{{/with}}
+</div>
+</div>
+<div class='slider-controls'>
+<div class='slider-controls-button slider-controls-button-prev js-btn-prev' data-dir='left'>&#9668;</div>
+<div class='slider-controls-button slider-controls-button-next js-btn-next' data-dir='right'>&#9658;</div>
+</div>
+<div class='slider-navigation'>
+{{#each slides}}
+<div class='slider-navigation-bullet js-bullet {{#if @first}}active{{/if}}' data-id='{{@index}}'></div>
+{{/each}}
+</div>
+</div>
+<button class='btn-back js-back-step-two'>Назад</button>
+</script>
