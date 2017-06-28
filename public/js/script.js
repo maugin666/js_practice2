@@ -130,7 +130,7 @@ function Slider() {
     }, 7000)
   }
 
-  function _listeners() {
+  function listeners() {
     $(document)
       .on('click', '.js-add-array', function (event) {
         event.preventDefault();
@@ -187,7 +187,7 @@ function Slider() {
   this.init = function () {
     console.log('init');
     self.drawA();
-    _listeners();
+    listeners();
   };
 }
 
