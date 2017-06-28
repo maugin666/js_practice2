@@ -180,8 +180,6 @@ function Slider() {
       })
       .on('transitionend', '.slider-list', function () {
         inTransition = false;
-      })
-      .on('transitionend', '.slider-list', function () {
         self.resetSlider();
       });
   }
