@@ -1,0 +1,25 @@
+.slider {
+  position: relative; width: 500px; height: 370px; margin-left: 100px; clear: left;
+  &-wrapper { width: 500px; overflow: hidden; }
+  &-list {
+    position: relative; left: 0; width: 99999px; height: 100%;
+    &::after { content: ""; display: block; clear: both; }
+  }
+  &-item {
+    position: relative; float: left; width: 500px; height: 100%; line-height: 370px;
+    .si-pic { display: inline-block; vertical-align: middle; width: 100%; height: auto; }
+    .si-comment { position: absolute; top: 0; left: 0; z-index: 5; width: 100%; padding: 20px 15px; background: rgba(0, 0, 0, .4); color: #fff; line-height: normal; }
+  }
+  .sc-button {
+    position: absolute;  top: 160px; width: 30px; height: 30px; cursor: pointer;
+    &-prev { left: -70px; }
+    &-next { right: -70px; }
+  }
+  &-navigation {
+    position: absolute; bottom: 5px; right: 15px; z-index: 10;
+    .sn-bullet { display: inline-block; margin: 5px; width: 7px; height: 7px; border: 1px solid #000; border-radius: 8px; background: #fff; cursor: pointer;
+      &.active { background: $main-color; }
+    }
+  }
+}
+.animated { transition: all .3s linear; }

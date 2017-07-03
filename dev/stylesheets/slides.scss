@@ -1,0 +1,13 @@
+.add-comment-item {
+  width: 600px; height: 210px; margin: 30px auto; font-size: 0;
+  .aci-left-block,
+  .aci-right-block { display: inline-block; vertical-align: top; height: 100%; }
+  .aci-left-block { width: 30%; line-height: 210px; }
+  .aci-right-block { width: 70%; padding: 15px; }
+  .aci-add-comment { display: block; width: 100%; margin: 20px 0; }
+}
+.remove-slide { display: block; }
+.btn-back,
+.btn-save-slides { display: block; float: left; margin-top: 50px; }
+.btn-save-slides { float: right; }
+.object-image { display: inline-block; vertical-align: middle; max-height: 150px; max-width: 180px; }
