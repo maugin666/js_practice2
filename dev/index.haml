@@ -55,8 +55,8 @@
           {{/if}}
         {{/with}}
     .slider-controls
-      .sc-button.sc-button-prev.js-btn-prev{data: {dir: "left"}} ◀
-      .sc-button.sc-button-next.js-btn-next{data: {dir: "right"}} ▶
+      .sc-button.sc-button-prev.js-btn-prev{data: {direction: "left"}} ◀
+      .sc-button.sc-button-next.js-btn-next{data: {direction: "right"}} ▶
     .slider-navigation
       {{#each slides}}
       %div{class: "sn-bullet js-bullet {{#if @first}}active{{/if}}", data: {id: "{{@index}}"}}

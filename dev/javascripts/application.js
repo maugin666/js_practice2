@@ -1,7 +1,7 @@
 function Controller() {
   var
     preview = new Preview(),
-    slider = new Slider();
+    slider;
 
   function listeners() {
     $(document)
@@ -23,7 +23,8 @@ function Controller() {
       })
       .on('click', '.js-save-slides', function () {
         preview.renderSliderTemplate();
-        slider.autoplaySlider();
+        slider = new Slider();
+        //slider.autoplaySlider();
       })
       .on('click', '.js-remove-slide', function () {
         var id = parseInt($(this).data('id'));
@@ -31,28 +32,24 @@ function Controller() {
         preview.renderSlidesTemplate();
       })
       .on('click', '.js-btn-prev', function () {
-        slider.moveSlide($(this).data('dir'));
+        slider.moveSlide($(this), $(this).data('direction'));
       })
       .on('click', '.js-btn-next', function () {
-        slider.moveSlide($(this).data('dir'));
+        slider.moveSlide($(this), $(this).data('direction'));
       })
       .on('click', '.js-bullet', function () {
         var id = parseInt($(this).data('id'));
 
         slider.manageBullet($(this),id);
       })
-      .on('mouseenter', '.slider', function () {
+      /*.on('mouseenter', '.slider', function () {
         $(this).addClass('hover');
       })
       .on('mouseleave', '.slider', function () {
         $(this).removeClass('hover');
-      })
+      })*/
       .on('click', '.js-back-step-two', function () {
         preview.renderSlidesTemplate();
-      })
-      .on('transitionend', '.slider-list', function () {
-        var inTransition = false;
-        slider.resetSlider();
       });
   }
 
@@ -66,4 +63,12 @@ function Controller() {
 
 $(document).ready(function () {
   new Controller().init();
+
+  var qqq = '[\
+    "https://c1.staticflickr.com/3/2491/3751647375_4695b378de_z.jpg",\
+    "https://c1.staticflickr.com/3/2443/3752426198_ebe03fa615_z.jpg",\
+    "https://c2.staticflickr.com/2/1032/3175022066_57fce505be_z.jpg",\
+    "https://c1.staticflickr.com/3/2528/3751624573_08815f8950_z.jpg"\
+  ]';
+  $('.js-insert-array').val(qqq);
 });

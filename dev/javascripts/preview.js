@@ -11,7 +11,6 @@ function Preview() {
     return JSON.stringify(context);
   });
 
-  // операции с массивом
   this.createData = function (array) {
     if (arrayObjects.length !== 0 || arrayURL.length !== 0) {
       arrayObjects.length = 0;
@@ -39,8 +38,6 @@ function Preview() {
       itemLink = $('.js-add-link[data-id="' + item.id + '"]').val();
       item.comment = $('.js-add-comment[data-id="' + item.id + '"]').val();
       item.link = itemLink;
-
-      //if (!itemLink.match(/^\w+:\/\//) && itemLink.length !== 0) item.link = 'http://' + item.link;
     });
   };
 
@@ -52,7 +49,6 @@ function Preview() {
     });
   };
 
-  // отрисовка
   this.renderInputTemplate = function () {
     $container.html(inputTemplate({slides: arrayURL}));
   };
