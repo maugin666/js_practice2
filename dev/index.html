@@ -12,7 +12,7 @@
 </html>
 <script id='input-template' type='text/x-handlebars-template'>
 <div class='add-array-form' id='js-add-array-form'>
-<textarea class='aaf-textarea js-insert-array' placeholder='Вставьте массив изображений'>{{#if slides.length}}{{json slides}}{{/if}}</textarea>
+<textarea class='aaf-textarea js-insert-array' placeholder='Вставьте массив изображений'></textarea>
 <button class='aaf-button js-add-array'>Загрузить</button>
 </div>
 </script>
@@ -40,14 +40,14 @@
 <div class='slider-list js-slider-list'>
 {{#each slides}}
 {{#if link.length}}
-<a class='slider-item js-slider-item {{#if @first}}active{{/if}}' data-id='{{@index}}' href='{{link}}' target='_blank'>
+<a class='slider-item js-slider-item {{#if @first}}active{{/if}}' data-position='{{@index}}' href='{{link}}' target='_blank'>
 <img class='si-pic' src='{{image}}'>
 {{#if comment.length}}
 <div class='si-comment'>{{comment}}</div>
 {{/if}}
 </a>
 {{else}}
-<div class='slider-item js-slider-item {{#if @first}}active{{/if}}' data-id='{{@index}}'>
+<div class='slider-item js-slider-item {{#if @first}}active{{/if}}' data-position='{{@index}}'>
 <img class='si-pic' src='{{image}}'>
 {{#if comment.length}}
 <div class='si-comment'>{{comment}}</div>
@@ -55,14 +55,6 @@
 </div>
 {{/if}}
 {{/each}}
-{{#with slides.[0]}}
-<div class='slider-item js-slider-item' data-id='0'>
-<img class='si-pic' src='{{image}}'>
-{{#if comment.length}}
-<div class='si-comment'>{{comment}}</div>
-{{/if}}
-</div>
-{{/with}}
 </div>
 </div>
 <div class='slider-controls'>
@@ -71,7 +63,7 @@
 </div>
 <div class='slider-navigation'>
 {{#each slides}}
-<div class='sn-bullet js-bullet {{#if @first}}active{{/if}}' data-id='{{@index}}'></div>
+<div class='sn-bullet js-bullet {{#if @first}}active{{/if}}' data-position='{{@index}}'></div>
 {{/each}}
 </div>
 </div>

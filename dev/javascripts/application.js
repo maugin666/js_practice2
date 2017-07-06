@@ -32,15 +32,15 @@ function Controller() {
         preview.renderSlidesTemplate();
       })
       .on('click', '.js-btn-prev', function () {
-        slider.moveSlide($(this), $(this).data('direction'));
+        slider.moveSlide($(this).data('direction'));
       })
       .on('click', '.js-btn-next', function () {
-        slider.moveSlide($(this), $(this).data('direction'));
+        slider.moveSlide($(this).data('direction'));
       })
       .on('click', '.js-bullet', function () {
-        var id = parseInt($(this).data('id'));
+        var position = parseInt($(this).data('position'));
 
-        slider.manageBullet($(this),id);
+        slider.manageBullet(position);
       })
       /*.on('mouseenter', '.slider', function () {
         $(this).addClass('hover');

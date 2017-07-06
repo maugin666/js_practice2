@@ -7,9 +7,6 @@ function Preview() {
     sliderTemplate = Handlebars.compile($('#slider-template').html()),
     $container = $('.js-container');
 
-  Handlebars.registerHelper('json', function (context) {
-    return JSON.stringify(context);
-  });
 
   this.createData = function (array) {
     if (arrayObjects.length !== 0 || arrayURL.length !== 0) {

@@ -10,7 +10,7 @@
 
 %script#input-template{type: "text/x-handlebars-template"}
   .add-array-form#js-add-array-form
-    %textarea.aaf-textarea.js-insert-array{placeholder: "Вставьте массив изображений"} {{#if slides.length}}{{json slides}}{{/if}}
+    %textarea.aaf-textarea.js-insert-array{placeholder: "Вставьте массив изображений"}
     %button.aaf-button.js-add-array Загрузить
 
 %script#slides-template{type: "text/x-handlebars-template"}
@@ -34,31 +34,24 @@
       .slider-list.js-slider-list
         {{#each slides}}
         {{#if link.length}}
-        %a{data: {id: "{{@index}}"}, href: "{{link}}", target: "_blank", class: "slider-item js-slider-item {{#if @first}}active{{/if}}"}
+        %a{data: {position: "{{@index}}"}, href: "{{link}}", target: "_blank", class: "slider-item js-slider-item {{#if @first}}active{{/if}}"}
           %img.si-pic{src: "{{image}}"}
           {{#if comment.length}}
           .si-comment {{comment}}
           {{/if}}
         {{else}}
-        %div{data: {id: "{{@index}}"}, class: "slider-item js-slider-item {{#if @first}}active{{/if}}"}
+        %div{data: {position: "{{@index}}"}, class: "slider-item js-slider-item {{#if @first}}active{{/if}}"}
           %img.si-pic{src: "{{image}}"}
           {{#if comment.length}}
           .si-comment {{comment}}
           {{/if}}
         {{/if}}
         {{/each}}
-        {{#with slides.[0]}}
-        %div{data: {id: "0"}, class: "slider-item js-slider-item"}
-          %img.si-pic{src: "{{image}}"}
-          {{#if comment.length}}
-          .si-comment {{comment}}
-          {{/if}}
-        {{/with}}
     .slider-controls
       .sc-button.sc-button-prev.js-btn-prev{data: {direction: "left"}} ◀
       .sc-button.sc-button-next.js-btn-next{data: {direction: "right"}} ▶
     .slider-navigation
       {{#each slides}}
-      %div{class: "sn-bullet js-bullet {{#if @first}}active{{/if}}", data: {id: "{{@index}}"}}
+      %div{class: "sn-bullet js-bullet {{#if @first}}active{{/if}}", data: {position: "{{@index}}"}}
       {{/each}}
   %button.btn-back.js-back-step-two Назад
