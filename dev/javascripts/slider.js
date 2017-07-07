@@ -6,7 +6,7 @@ function Slider() {
     singleWidth = $sliderItem.width(),
     slidesCount = $sliderItem.length;
 
-  function moveSlideToIndex(direction, position) {
+  this.moveSlideToIndex = function(direction, position) {
     var
       $currentSlide = $('.js-slider-item.active'),
       currentPosition = parseInt($currentSlide.data('position')),
@@ -28,25 +28,23 @@ function Slider() {
       sliderX = singleWidth;
       slideX = -slidesCount * singleWidth;
       reposition(sliderX, slideX);
-
       nextPosition = 0;
       sliderX = 0;
-      roundabout(sliderX);
+      makeCarouselEffect(sliderX);
     } else if (nextPosition < 0) {
       sliderX = -slidesCount * singleWidth;
       slideX = -sliderX;
       reposition(sliderX, slideX);
-
       nextPosition = parseInt($sliderItem.last().data('position'));
       sliderX = -(slidesCount - 1) * singleWidth;
-      roundabout(sliderX);
+      makeCarouselEffect(sliderX);
     } else {
       sliderX = -nextPosition * singleWidth;
       animatedMove(sliderX);
       setActive(nextPosition);
     }
 
-    function roundabout(sliderX) {
+    function makeCarouselEffect(sliderX) {
       $sliderList.on('transitionend', resetSlide);
       setTimeout(function () {animatedMove(sliderX);}, 10);
     }
@@ -65,11 +63,11 @@ function Slider() {
     function animatedMove(x) {
       $sliderList.addClass('animated').css({transform:'translateX(' + x + 'px)'});
       $sliderList.on('transitionend', unsetAnimated);
+    }
 
-      function unsetAnimated() {
-        $sliderList.removeClass('animated');
-        $sliderList.off('transitionend', unsetAnimated);
-      }
+    function unsetAnimated() {
+      $sliderList.removeClass('animated');
+      $sliderList.off('transitionend', unsetAnimated);
     }
 
     function setActive(position) {
@@ -77,10 +75,6 @@ function Slider() {
       $('.slider-item[data-position="' + position + '"]').addClass('active');
       $('.js-bullet[data-position="' + position + '"]').addClass('active').siblings().removeClass('active');
     }
-  }
-
-  this.moveSlide = function (direction) {
-    moveSlideToIndex(direction);
   };
 
   this.manageBullet = function (position) {
@@ -88,14 +82,12 @@ function Slider() {
 
     if (position === currentPosition) return;
 
-    moveSlideToIndex(null, position);
+    self.moveSlideToIndex(null, position);
   };
 
   this.autoplaySlider = function () {
-    setInterval(function () {
-      if (!$('.slider').hasClass('hover')) {
-        self.moveSlide('right');
-      }
+    self.launchSlider = setInterval(function () {
+        self.moveSlideToIndex('right');
     }, 7000)
   }
 }

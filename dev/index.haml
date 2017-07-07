@@ -10,7 +10,7 @@
 
 %script#input-template{type: "text/x-handlebars-template"}
   .add-array-form#js-add-array-form
-    %textarea.aaf-textarea.js-insert-array{placeholder: "Вставьте массив изображений"}
+    %textarea.aaf-textarea.js-insert-array{placeholder: "Вставьте массив изображений"} {{#if slides.length}}{{slides}}{{/if}}
     %button.aaf-button.js-add-array Загрузить
 
 %script#slides-template{type: "text/x-handlebars-template"}

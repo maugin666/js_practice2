@@ -9,7 +9,7 @@ function Controller() {
         event.preventDefault();
         try {
           var value = $('.js-insert-array').val();
-          preview.createData(JSON.parse(value));
+          preview.createSlides(JSON.parse(value));
           preview.renderSlidesTemplate();
         } catch (error) {
           alert("Ошибка! " + error);
@@ -19,35 +19,35 @@ function Controller() {
         preview.renderInputTemplate();
       })
       .on('change', '.js-add-comment, .js-add-link', function () {
-        preview.editData();
+        preview.editSlide();
       })
       .on('click', '.js-save-slides', function () {
         preview.renderSliderTemplate();
         slider = new Slider();
-        //slider.autoplaySlider();
+        slider.autoplaySlider();
       })
       .on('click', '.js-remove-slide', function () {
         var id = parseInt($(this).data('id'));
-        preview.deleteData(id);
+        preview.deleteSlide(id);
         preview.renderSlidesTemplate();
       })
       .on('click', '.js-btn-prev', function () {
-        slider.moveSlide($(this).data('direction'));
+        slider.moveSlideToIndex($(this).data('direction'));
       })
       .on('click', '.js-btn-next', function () {
-        slider.moveSlide($(this).data('direction'));
+        slider.moveSlideToIndex($(this).data('direction'));
       })
       .on('click', '.js-bullet', function () {
         var position = parseInt($(this).data('position'));
 
         slider.manageBullet(position);
       })
-      /*.on('mouseenter', '.slider', function () {
-        $(this).addClass('hover');
+      .on('mouseenter', '.slider', function () {
+        clearInterval(slider.launchSlider);
       })
       .on('mouseleave', '.slider', function () {
-        $(this).removeClass('hover');
-      })*/
+        slider.autoplaySlider();
+      })
       .on('click', '.js-back-step-two', function () {
         preview.renderSlidesTemplate();
       });

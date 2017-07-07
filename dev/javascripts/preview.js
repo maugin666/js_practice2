@@ -8,7 +8,7 @@ function Preview() {
     $container = $('.js-container');
 
 
-  this.createData = function (array) {
+  this.createSlides = function (array) {
     if (arrayObjects.length !== 0 || arrayURL.length !== 0) {
       arrayObjects.length = 0;
       arrayURL.length = 0;
@@ -28,7 +28,7 @@ function Preview() {
     }
   };
 
-  this.editData = function () {
+  this.editSlide = function () {
     arrayObjects.forEach(function (item) {
       var itemLink;
 
@@ -38,7 +38,7 @@ function Preview() {
     });
   };
 
-  this.deleteData = function (id) {
+  this.deleteSlide = function (id) {
     arrayObjects.forEach(function(item, i) {
       if (item.id === id) {
         arrayObjects.splice(i, 1);

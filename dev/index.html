@@ -12,7 +12,7 @@
 </html>
 <script id='input-template' type='text/x-handlebars-template'>
 <div class='add-array-form' id='js-add-array-form'>
-<textarea class='aaf-textarea js-insert-array' placeholder='Вставьте массив изображений'></textarea>
+<textarea class='aaf-textarea js-insert-array' placeholder='Вставьте массив изображений'>{{#if slides.length}}{{slides}}{{/if}}</textarea>
 <button class='aaf-button js-add-array'>Загрузить</button>
 </div>
 </script>
