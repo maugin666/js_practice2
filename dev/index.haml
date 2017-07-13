@@ -7,11 +7,12 @@
     %script{src: "javascripts/main.js"}
   %body
     .container.js-container
-
-%script#input-template{type: "text/x-handlebars-template"}
-  .add-array-form#js-add-array-form
-    %textarea.aaf-textarea.js-insert-array{placeholder: "Вставьте массив изображений"} {{#if slides.length}}{{slides}}{{/if}}
-    %button.aaf-button.js-add-array Загрузить
+      .state.visible.js-input
+        .add-array-form#js-add-array-form
+          %textarea.aaf-textarea.js-insert-array{placeholder: "Вставьте массив изображений"}
+          %button.aaf-button.js-add-array Загрузить
+      .state.js-preview
+      .state.js-slider
 
 %script#slides-template{type: "text/x-handlebars-template"}
   {{#each slides}}

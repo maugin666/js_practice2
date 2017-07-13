@@ -1,68 +1,49 @@
 function Controller() {
   var
-    preview = new Preview(),
-    slider;
+    arrayURL,
+    arraySlides = [],
+    options = {
+      autoplay: true,
+      delay: 700
+    },
+    $inputState = $('.js-input'),
+    $previewState = $('.js-preview'),
+    $sliderState = $('.js-slider');
+
+  function changeState(state) {
+    state.addClass('visible').siblings().removeClass('visible');
+
+  }
 
   function listeners() {
     $(document)
       .on('click', '.js-add-array', function (event) {
         event.preventDefault();
         try {
-          var value = $('.js-insert-array').val();
-          preview.createSlides(JSON.parse(value));
-          preview.renderSlidesTemplate();
+          arrayURL = JSON.parse($('.js-insert-array').val());
+          new Preview(arrayURL, arraySlides).init();
+          changeState($previewState);
         } catch (error) {
           alert("Ошибка! " + error);
         }
       })
       .on('click', '.js-back-step-one', function () {
-        preview.renderInputTemplate();
-      })
-      .on('change', '.js-add-comment, .js-add-link', function () {
-        preview.editSlide();
+        changeState($inputState);
       })
       .on('click', '.js-save-slides', function () {
-        preview.renderSliderTemplate();
-        slider = new Slider();
-        slider.autoplaySlider();
-      })
-      .on('click', '.js-remove-slide', function () {
-        var id = parseInt($(this).data('id'));
-        preview.deleteSlide(id);
-        preview.renderSlidesTemplate();
-      })
-      .on('click', '.js-btn-prev', function () {
-        slider.moveSlideToIndex($(this).data('direction'));
-      })
-      .on('click', '.js-btn-next', function () {
-        slider.moveSlideToIndex($(this).data('direction'));
-      })
-      .on('click', '.js-bullet', function () {
-        var position = parseInt($(this).data('position'));
-
-        slider.manageBullet(position);
-      })
-      .on('mouseenter', '.slider', function () {
-        clearInterval(slider.launchSlider);
-      })
-      .on('mouseleave', '.slider', function () {
-        slider.autoplaySlider();
+        new Slider(arraySlides, options).init();
+        changeState($sliderState);
       })
       .on('click', '.js-back-step-two', function () {
-        preview.renderSlidesTemplate();
+        changeState($previewState);
       });
   }
 
-  this.init = function () {
-    console.log('init');
-    preview.renderInputTemplate();
-    listeners();
-  };
-
+  listeners();
 }
 
 $(document).ready(function () {
-  new Controller().init();
+  new Controller();
 
   var qqq = '[\
     "https://c1.staticflickr.com/3/2491/3751647375_4695b378de_z.jpg",\

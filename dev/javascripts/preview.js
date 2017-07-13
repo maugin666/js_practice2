@@ -1,60 +1,60 @@
-function Preview() {
-  var
-    arrayURL = [],
-    arrayObjects = [],
-    inputTemplate = Handlebars.compile($('#input-template').html()),
-    slidesTemplate = Handlebars.compile($('#slides-template').html()),
-    sliderTemplate = Handlebars.compile($('#slider-template').html()),
-    $container = $('.js-container');
+function Preview(arrayURL, arraySlides) {
+  var slidesTemplate = Handlebars.compile($('#slides-template').html());
 
+  function renderSlidesTemplate(arrayURL) {
+    $('.js-preview').html(slidesTemplate({slides: arrayURL}));
+  }
 
-  this.createSlides = function (array) {
-    if (arrayObjects.length !== 0 || arrayURL.length !== 0) {
-      arrayObjects.length = 0;
-      arrayURL.length = 0;
-    }
+  function createSlides(array) {
+    arraySlides.length = 0;
     if (Array.isArray(array)) {
       array.forEach(function (item, index) {
-        arrayURL.push(item);
-        arrayObjects.push({
-          id: index,
-          image: item,
-          link: '',
-          comment: ''
-        });
+        arraySlides[index] = {id: index, image: item};
       });
     } else {
       alert('Эта структура не массив URL картинок.');
     }
-  };
+  }
 
-  this.editSlide = function () {
-    arrayObjects.forEach(function (item) {
-      var itemLink;
-
-      itemLink = $('.js-add-link[data-id="' + item.id + '"]').val();
-      item.comment = $('.js-add-comment[data-id="' + item.id + '"]').val();
-      item.link = itemLink;
-    });
-  };
-
-  this.deleteSlide = function (id) {
-    arrayObjects.forEach(function(item, i) {
+  function editSlide(id, field) {
+    arraySlides.forEach(function(item, i) {
       if (item.id === id) {
-        arrayObjects.splice(i, 1);
+        if (field.hasClass('js-add-comment')) {
+          item.comment = field.val();
+        } else if (field.hasClass('js-add-link')) {
+          item.link = field.val();
+        }
       }
     });
-  };
+  }
 
-  this.renderInputTemplate = function () {
-    $container.html(inputTemplate({slides: arrayURL}));
-  };
+  function deleteSlide(id) {
+    arraySlides.forEach(function(item, i) {
+      if (item.id === id) {
+        arraySlides.splice(i, 1);
+      }
+    });
+  }
 
-  this.renderSlidesTemplate = function () {
-    $container.html(slidesTemplate({slides: arrayObjects}));
-  };
+  function listeners() {
+    $(document)
+      .on('change', '.js-add-comment, .js-add-link', function () {
+        var id = parseInt($(this).data('id'));
 
-  this.renderSliderTemplate = function () {
-    $container.html(sliderTemplate({slides: arrayObjects}));
+        editSlide(id, $(this));
+      })
+      .on('click', '.js-remove-slide', function () {
+        var id = parseInt($(this).data('id'));
+
+        deleteSlide(id);
+        renderSlidesTemplate(arraySlides);
+      });
+  }
+
+  listeners();
+
+  this.init = function () {
+    createSlides(arrayURL);
+    renderSlidesTemplate(arraySlides);
   };
 }

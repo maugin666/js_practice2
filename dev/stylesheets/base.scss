@@ -3,8 +3,13 @@ $main-color: #6a5acd;
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: Georgia, serif; font-size: 16px; }
 
 .container { width: 800px; margin: 0 auto; padding: 100px 0; }
+.state { display: none; }
+.visible { display: block; }
 .add-array-form {
   width: 550px; margin: 0 auto;
   .aaf-textarea { display: block; width: 100%; height: 250px; resize: none; }
   .aaf-button { display: block; width: 100%; padding: 25px; background: $main-color; text-align: center; color: #fff; cursor: pointer; }
 }
+
+@import 'slides';
+@import 'slider';
