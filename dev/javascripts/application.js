@@ -1,45 +1,45 @@
 function Controller() {
   var
-    arrayURL,
-    arraySlides = [],
-    options = {
+    _arrayURL,
+    _arraySlides = [],
+    _options = {
       autoplay: true,
       delay: 7000
     },
-    $inputState = $('.js-input'),
-    $previewState = $('.js-preview'),
-    $sliderState = $('.js-slider');
+    _$inputState = $('.js-input'),
+    _$previewState = $('.js-preview'),
+    _$sliderState = $('.js-slider');
 
-  function changeState(state) {
+  function _changeState(state) {
     state.addClass('visible').siblings().removeClass('visible');
 
   }
 
-  function listeners() {
+  function _listeners() {
     $(document)
       .on('click', '.js-add-array', function (event) {
         event.preventDefault();
         try {
-          arrayURL = JSON.parse($('.js-insert-array').val());
-          new Preview(arrayURL, arraySlides);
-          changeState($previewState);
+          _arrayURL = JSON.parse($('.js-insert-array').val());
+          new Preview(_arrayURL, _arraySlides);
+          _changeState(_$previewState);
         } catch (error) {
           alert("Ошибка! " + error);
         }
       })
       .on('click', '.js-back-step-one', function () {
-        changeState($inputState);
+        _changeState(_$inputState);
       })
       .on('click', '.js-save-slides', function () {
-        new Slider(arraySlides, options);
-        changeState($sliderState);
+        new Slider(_arraySlides, _options);
+        _changeState(_$sliderState);
       })
       .on('click', '.js-back-step-two', function () {
-        changeState($previewState);
+        _changeState(_$previewState);
       });
   }
 
-  listeners();
+  _listeners();
 }
 
 $(document).ready(function () {

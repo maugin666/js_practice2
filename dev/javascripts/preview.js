@@ -1,15 +1,15 @@
 function Preview(arrayURL, arraySlides) {
-  var slidesTemplate = Handlebars.compile($('#slides-template').html());
+  var _slidesTemplate = Handlebars.compile($('#slides-template').html());
 
-  createSlides(arrayURL);
-  renderSlidesTemplate(arraySlides);
-  listeners();
+  _createSlides(arrayURL);
+  _renderSlidesTemplate(arraySlides);
+  _listeners();
 
-  function renderSlidesTemplate(arrayURL) {
-    $('.js-preview').html(slidesTemplate({slides: arrayURL}));
+  function _renderSlidesTemplate(arrayURL) {
+    $('.js-preview').html(_slidesTemplate({slides: arrayURL}));
   }
 
-  function createSlides(array) {
+  function _createSlides(array) {
     arraySlides.length = 0;
     if (Array.isArray(array)) {
       array.forEach(function (item, index) {
@@ -20,7 +20,7 @@ function Preview(arrayURL, arraySlides) {
     }
   }
 
-  function editSlide(id, field) {
+  function _editSlide(id, field) {
     arraySlides.forEach(function(item, i) {
       if (item.id === id) {
         if (field.hasClass('js-add-comment')) {
@@ -32,7 +32,7 @@ function Preview(arrayURL, arraySlides) {
     });
   }
 
-  function deleteSlide(id) {
+  function _deleteSlide(id) {
     arraySlides.forEach(function(item, i) {
       if (item.id === id) {
         arraySlides.splice(i, 1);
@@ -40,18 +40,18 @@ function Preview(arrayURL, arraySlides) {
     });
   }
 
-  function listeners() {
+  function _listeners() {
     $(document)
       .on('change', '.js-add-comment, .js-add-link', function () {
-        var id = parseInt($(this).data('id'));
+        var _id = parseInt($(this).data('id'));
 
-        editSlide(id, $(this));
+        _editSlide(_id, $(this));
       })
       .on('click', '.js-remove-slide', function () {
-        var id = parseInt($(this).data('id'));
+        var _id = parseInt($(this).data('id'));
 
-        deleteSlide(id);
-        renderSlidesTemplate(arraySlides);
+        _deleteSlide(_id);
+        _renderSlidesTemplate(arraySlides);
       });
   }
 
