@@ -3,6 +3,10 @@ function Slider(arraySlides, options) {
     launchSlider,
     sliderTemplate = Handlebars.compile($('#slider-template').html());
 
+  renderSliderTemplate(arraySlides);
+  if (options.autoplay) autoplaySlider();
+  listeners();
+
   function renderSliderTemplate(arraySlides) {
     $('.js-slider').html(sliderTemplate({slides: arraySlides}));
   }
@@ -68,16 +72,15 @@ function Slider(arraySlides, options) {
 
 
   }
+
   function getActiveSlidePosition() {
     return parseInt($('.js-slider-item.active').data('position'));
   }
 
   function autoplaySlider() {
-    if (options.autoplay && !$('.js-slider').hasClass('visible')) {
-      launchSlider = setInterval(function () {
-        moveSlide(getActiveSlidePosition() + 1);
-      }, options.delay)
-    }
+    launchSlider = setInterval(function () {
+      moveSlide(getActiveSlidePosition() + 1);
+    }, options.delay)
   }
 
   function listeners() {
@@ -100,17 +103,11 @@ function Slider(arraySlides, options) {
         moveSlide(position);
       })
       .on('mouseenter', '.slider', function () {
-        //clearInterval(launchSlider);
+        clearInterval(launchSlider);
       })
       .on('mouseleave', '.slider', function () {
-        //autoplaySlider();
+        autoplaySlider();
       });
   }
 
-  //autoplaySlider();
-  listeners();
-
-  this.init = function () {
-    renderSliderTemplate(arraySlides);
-  };
 }

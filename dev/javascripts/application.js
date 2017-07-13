@@ -4,7 +4,7 @@ function Controller() {
     arraySlides = [],
     options = {
       autoplay: true,
-      delay: 700
+      delay: 7000
     },
     $inputState = $('.js-input'),
     $previewState = $('.js-preview'),
@@ -21,7 +21,7 @@ function Controller() {
         event.preventDefault();
         try {
           arrayURL = JSON.parse($('.js-insert-array').val());
-          new Preview(arrayURL, arraySlides).init();
+          new Preview(arrayURL, arraySlides);
           changeState($previewState);
         } catch (error) {
           alert("Ошибка! " + error);
@@ -31,7 +31,7 @@ function Controller() {
         changeState($inputState);
       })
       .on('click', '.js-save-slides', function () {
-        new Slider(arraySlides, options).init();
+        new Slider(arraySlides, options);
         changeState($sliderState);
       })
       .on('click', '.js-back-step-two', function () {

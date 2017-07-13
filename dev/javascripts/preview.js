@@ -1,6 +1,10 @@
 function Preview(arrayURL, arraySlides) {
   var slidesTemplate = Handlebars.compile($('#slides-template').html());
 
+  createSlides(arrayURL);
+  renderSlidesTemplate(arraySlides);
+  listeners();
+
   function renderSlidesTemplate(arrayURL) {
     $('.js-preview').html(slidesTemplate({slides: arrayURL}));
   }
@@ -51,10 +55,4 @@ function Preview(arrayURL, arraySlides) {
       });
   }
 
-  listeners();
-
-  this.init = function () {
-    createSlides(arrayURL);
-    renderSlidesTemplate(arraySlides);
-  };
 }
