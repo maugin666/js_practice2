@@ -9,6 +9,8 @@ function Slider(arraySlides, options) {
     _singleWidth,
     _slidesCount,
     _fullWidth,
+    _activePosition,
+    _sliderOffsetX,
     _sliderTemplate = Handlebars.compile($('#slider-template').html());
 
   _renderSliderTemplate(arraySlides);
@@ -26,13 +28,14 @@ function Slider(arraySlides, options) {
     _singleWidth = _$sliderItem.width();
     _slidesCount = _$sliderItem.length;
     _fullWidth = _slidesCount * _singleWidth;
+    _sliderOffsetX = -(_slidesCount - 1) * _singleWidth;
 
     if (_nextPosition >= _slidesCount) {
       _moveBorderSlide(_singleWidth, -_fullWidth, 0);
-      _nextPosition = 0;
+      _activePosition = 0;
     } else if (_nextPosition < 0) {
-      _moveBorderSlide(-_fullWidth, _fullWidth, (-(_slidesCount - 1) * _singleWidth));
-      _nextPosition = parseInt(_$sliderItem.last().data('position'));
+      _moveBorderSlide(-_fullWidth, _fullWidth, _sliderOffsetX);
+      _activePosition = parseInt(_$sliderItem.last().data('position'));
     } else {
       _sliderX = -_nextPosition * _singleWidth;
       _animatedMove(_sliderX, _$sliderList);
@@ -41,50 +44,45 @@ function Slider(arraySlides, options) {
 
   }
 
-  function _moveBorderSlide(a, b, c) {
-    _sliderX = a;
-    _slideX = b;
+  function _moveBorderSlide(sliderX, slideX, sliderOffsetX) {
+    _sliderX = sliderX;
+    _slideX = slideX;
     _reposition(_sliderX, _slideX, _$currentSlide, _$sliderList);
-    _sliderX = c;
+    _sliderX = sliderOffsetX;
     _makeCarouselEffect(_sliderX, _$sliderList);
   }
 
   function _resetSlide() {
     $('.js-slider-item.active').css({transform: ''});
-    console.log(_nextPosition);
-    _setActive(_nextPosition, _$currentSlide);
+    console.log(_activePosition);
+    _setActive(_activePosition, _$currentSlide);
     $('.js-slider-list').off('transitionend', _resetSlide);
   }
 
-  function _reposition(_sliderX, _slideX, _$currentSlide, _$sliderList) {
-    _$sliderList.css({transform:'translateX(' + _sliderX + 'px)'});
-    _$currentSlide.css({transform:'translateX(' + _slideX + 'px)'});
+  function _reposition(sliderX, slideX, $currentSlide, $sliderList) {
+    $sliderList.css({transform:'translateX(' + sliderX + 'px)'});
+    $currentSlide.css({transform:'translateX(' + slideX + 'px)'});
   }
 
-  function _setActive(position, _$currentSlide) {
-    _$currentSlide.removeClass('active');
+  function _setActive(position, $currentSlide) {
+    $currentSlide.removeClass('active');
     $('.slider-item[data-position="' + position + '"]').addClass('active');
     $('.js-bullet[data-position="' + position + '"]').addClass('active').siblings().removeClass('active');
   }
 
-  function _makeCarouselEffect(_sliderX, _$sliderList) {
-    _$sliderList.on('transitionend', _resetSlide);
-    setTimeout(function () { _animatedMove(_sliderX, _$sliderList); }, 10);
+  function _makeCarouselEffect(sliderX, $sliderList) {
+    $sliderList.on('transitionend', _resetSlide);
+    setTimeout(function () { _animatedMove(sliderX, $sliderList); }, 10);
   }
 
-  function _animatedMove(_sliderX, _$sliderList) {
-    _$sliderList.addClass('animated').css({transform:'translateX(' + _sliderX + 'px)'});
-    _$sliderList.on('transitionend', _unsetAnimated);
+  function _animatedMove(sliderX, $sliderList) {
+    $sliderList.addClass('animated').css({transform:'translateX(' + sliderX + 'px)'});
+    $sliderList.on('transitionend', _unsetAnimated);
   }
 
   function _unsetAnimated() {
     $('.js-slider-list').removeClass('animated').off('transitionend', _unsetAnimated);
   }
-
-
-
-
-
 
   function _getActiveSlidePosition() {
     return parseInt($('.js-slider-item.active').data('position'));
