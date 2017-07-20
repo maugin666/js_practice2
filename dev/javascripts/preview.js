@@ -1,41 +1,45 @@
-function Preview(arrayURL, arraySlides) {
-  var _slidesTemplate = Handlebars.compile($('#slides-template').html());
+function Preview(arrayURL) {
+  var
+    self = this,
+    _slidesTemplate = Handlebars.compile($('#slides-template').html());
 
-  _createSlides(arrayURL);
-  _renderSlidesTemplate(arraySlides);
-  _listeners();
+  this.arraySlides = [];
+
+  this.init = function () {
+    _createSlides(arrayURL);
+    _renderSlidesTemplate(self.arraySlides);
+    _listeners();
+  };
 
   function _renderSlidesTemplate(arrayURL) {
     $('.js-preview').html(_slidesTemplate({slides: arrayURL}));
   }
 
   function _createSlides(array) {
-    arraySlides.length = 0;
-    if (Array.isArray(array)) {
-      array.forEach(function (item, index) {
-        arraySlides[index] = {id: index, image: item};
-      });
-    } else {
-      alert('Эта структура не массив URL картинок.');
-    }
+    array.forEach(function (item, index) {
+      self.arraySlides[index] = {id: index, image: item};
+    });
   }
 
-  function _editSlide(id, field) {
-    arraySlides.forEach(function(item, i) {
-      if (item.id === id) {
-        if (field.hasClass('js-add-comment')) {
-          item.comment = field.val();
-        } else if (field.hasClass('js-add-link')) {
-          item.link = field.val();
-        }
+  function _editSlide($slide) {
+    self.arraySlides.find(function(item) {
+      if (item.id !== parseInt($slide.data('id'))) {
+        return;
+      }
+      if ($slide.hasClass('js-add-comment')) {
+        item.comment = $slide.val();
+      }
+      if ($slide.hasClass('js-add-link')) {
+        item.link = $slide.val();
       }
     });
   }
 
   function _deleteSlide(id) {
-    arraySlides.forEach(function(item, i) {
+    self.arraySlides.find(function(item, i) {
       if (item.id === id) {
-        arraySlides.splice(i, 1);
+        self.arraySlides.splice(i, 1);
+        return true;
       }
     });
   }
@@ -43,15 +47,13 @@ function Preview(arrayURL, arraySlides) {
   function _listeners() {
     $(document)
       .on('change', '.js-add-comment, .js-add-link', function () {
-        var _id = parseInt($(this).data('id'));
-
-        _editSlide(_id, $(this));
+        _editSlide($(this));
       })
       .on('click', '.js-remove-slide', function () {
-        var _id = parseInt($(this).data('id'));
+        var id = parseInt($(this).data('id'));
 
-        _deleteSlide(_id);
-        _renderSlidesTemplate(arraySlides);
+        _deleteSlide(id);
+        _renderSlidesTemplate(self.arraySlides);
       });
   }
 

@@ -7,12 +7,12 @@
     %script{src: "javascripts/main.js"}
   %body
     .container.js-container
-      .state.visible.js-input
+      .stage.visible.js-stage{data: {stage: "input-stage"}}
         .add-array-form#js-add-array-form
           %textarea.aaf-textarea.js-insert-array{placeholder: "Вставьте массив изображений"}
           %button.aaf-button.js-add-array Загрузить
-      .state.js-preview
-      .state.js-slider
+      .stage.js-stage.js-preview{data: {stage: "preview-stage"}}
+      .stage.js-stage.js-slider{data: {stage: "slider-stage"}}
 
 %script#slides-template{type: "text/x-handlebars-template"}
   {{#each slides}}

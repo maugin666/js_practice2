@@ -1,18 +1,16 @@
 function Controller() {
   var
     _arrayURL,
-    _arraySlides = [],
+    _preview,
     _options = {
       autoplay: true,
       delay: 7000
-    },
-    _$inputState = $('.js-input'),
-    _$previewState = $('.js-preview'),
-    _$sliderState = $('.js-slider');
+    };
 
-  function _changeState(state) {
-    state.addClass('visible').siblings().removeClass('visible');
-
+  function _changeState(stage) {
+    $('.js-stage').each(function (index, element) {
+      $(element).toggleClass('visible', stage === $(element).data('stage'));
+    });
   }
 
   function _listeners() {
@@ -21,21 +19,22 @@ function Controller() {
         event.preventDefault();
         try {
           _arrayURL = JSON.parse($('.js-insert-array').val());
-          new Preview(_arrayURL, _arraySlides);
-          _changeState(_$previewState);
+          _preview = new Preview(_arrayURL);
+          _preview.init();
+          _changeState('preview-stage');
         } catch (error) {
           alert("Ошибка! " + error);
         }
       })
       .on('click', '.js-back-step-one', function () {
-        _changeState(_$inputState);
+        _changeState('input-stage');
       })
       .on('click', '.js-save-slides', function () {
-        new Slider(_arraySlides, _options);
-        _changeState(_$sliderState);
+        new Slider(_preview.arraySlides, _options).init();
+        _changeState('slider-stage');
       })
       .on('click', '.js-back-step-two', function () {
-        _changeState(_$previewState);
+        _changeState('preview-stage');
       });
   }
 

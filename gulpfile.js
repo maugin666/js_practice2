@@ -7,7 +7,7 @@ var
   sourcemaps = require('gulp-sourcemaps'),
   cssmin = require('gulp-minify-css'),
   concat = require('gulp-concat'),
-  uglify = require('gulp-uglify');
+  uglify = require('gulp-uglifyjs');
 
 var path = {
   prod: {
@@ -51,7 +51,7 @@ gulp.task('js:build', function () {
   gulp.src(path.dev.js)
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(path.prod.js));
 });
