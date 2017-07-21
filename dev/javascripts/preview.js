@@ -16,9 +16,14 @@ function Preview(arrayURL) {
   }
 
   function _createSlides(array) {
-    array.forEach(function (item, index) {
-      self.arraySlides[index] = {id: index, image: item};
-    });
+    //Проверяю, что пришел массив и в нем урлы, т.к. по идее можно все, что угодно на первом стейте ввести.
+    if (Array.isArray(array)) {
+      array.forEach(function (item, index) {
+        if (String(item).match(/(https?:\/\/[^\s]+\.jpe?g)/i)) {
+          self.arraySlides[index] = {id: index, image: item};
+        }
+      });
+    }
   }
 
   function _editSlide($slide) {
